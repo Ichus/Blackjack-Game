@@ -14,7 +14,7 @@ class BetTest < MiniTest::Unit::TestCase
 
   def test_can_convert_to_chips
     assert_equal @bet.total_to_chips ,@bet_amount
-  def
+  end
 
   def test_bet_has_maximum
     assert_equal @bet.max, (@chip.value * 10)

@@ -1,23 +1,15 @@
-require "hand"
+require "base_player"
 require "bet"
 
 #
-class Player
+class Player < BasePlayer
   def initialize(deck, chips = 10)
     @chip_pool = chips
     @deck = deck
   end
 
-  def new_hand
-    @hand = Hand.new(@deck)
-  end
-
-  def hand
-    @hand
-  end
-
   def bet(chips)
-    if self.can_bet(chips)
+    if can_bet(chips)
       @chip_pool -= chips
       @bet = Bet.new(chips)
     else
@@ -26,21 +18,17 @@ class Player
   end
 
   def can_bet(chips)
-    if @chip_pool >= chips
-      true
-    else
-      false
-    end
+    @chip_pool >= chips
   end
 
   # if blackjack pays double odds
   # otherwise adds the chips that were bet and the chips won to the chip_pool
   def won_bet
-    #if @hand.blackjack?
-    #  @chip_pool += (@bet.total_to_chips * 3)
-    #else
-    @chip_pool += (@bet.total_to_chips * 2)
-    #end
+    if @hand.blackjack?
+      @chip_pool += (@bet.total_to_chips * 3)
+    else
+      @chip_pool += (@bet.total_to_chips * 2)
+    end
   end
 
   # Returns chips in case of a push

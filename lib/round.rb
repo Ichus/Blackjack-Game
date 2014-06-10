@@ -60,7 +60,7 @@ class Round
   def set_hands(hand_size = 2)
     puts "Dealing cards"
     @player.new_hand
-    @dealer.new_hand(@deck)
+    @dealer.new_hand
 
     hand_size.times do
       @player.hand.hit

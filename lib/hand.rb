@@ -10,7 +10,7 @@ class Hand
     @hand = []
     @deck = deck
     @limit = limit
-    @double_down_limit = double_down_limit
+    @DOUBLE_DOWN_LIMIT = double_down_limit
   end
 
   # access to the @hand array from outside the class. Not sure if best idea
@@ -19,16 +19,13 @@ class Hand
   end
 
   # prints the contents of the hand array
-  # originally I wanted it to print all the cards on the same line, but had
-  # to temporarily give up due to time constraints
   def print_hand
-    # index = 0
-    # until index == @hand[-1]
-    #   print "#{@hand[index].print_card}, "
-    #   index += 1
-    # end
-    # puts "#{@hand[-1].print_card}"
-    @hand.each { |each| puts "#{each.print_card}" }
+    index = 0
+    until index == @hand.rindex(@hand[-1])
+      print "#{@hand[index].print_card}, "
+      index += 1
+    end
+    puts "#{@hand[-1].print_card}"
   end
 
   # @hand hits taking a card off the top of the deck and adding it to it's array
@@ -52,8 +49,8 @@ class Hand
 
   # returns value of hand with aces accounted for
   def value
-    hand_value = self.total_value
-    num_aces = self.ace_count
+    hand_value = total_value
+    num_aces = ace_count
 
     if hand_value > 21
       until hand_value <= 21 || num_aces == 0
@@ -67,34 +64,22 @@ class Hand
 
   # returns whether or not the hand is busted
   def bust
-    if self.value > 21
-      true
-    else
-      false
-    end
+    value > 21
   end
 
   # Not implemented. these methods would have been used to impose hand limits
   # def double_down
-  #   @limit = @double_down_limit
+  #   @limit = @DOUBLE_DOWN_LIMIT
   # end
   #
   # def limit_reached
-  #   if @hand.length > @limit
-  #     true
-  #   else
-  #     false
-  #   end
+  #   @hand.length > @limit
   # end
 
   # returns whether the hand is a blackjack. Used for special blackjack payouts
   # which aren't in yet
   def blackjack?
-    if @hand.length == 2 && @hand.value == 21
-      true
-    else
-      false
-    end
+    @hand.length == 2 && value == 21
   end
 
   # For testing purposes only. Comment out

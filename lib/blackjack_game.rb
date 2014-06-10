@@ -9,7 +9,7 @@ class BlackjackGame
   def initialize
     @deck = Deck.new(3)
     @deck.shuffle
-    @dealer = Dealer.new
+    @dealer = Dealer.new(@deck)
     @player = Player.new(@deck)
     @round = Round.new(@deck, @player, @dealer)
   end

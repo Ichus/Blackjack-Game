@@ -9,6 +9,7 @@ class DeckTest < MiniTest::Unit::TestCase
 
   def test_new_deck_knows_how_many_decks_its_made_of
     assert_equal @deck.decks, @decks
+  end
 
   def test_new_deck_has_cards_in_increments_of_52
     assert_equal @deck.cards_left, (52 * @decks)

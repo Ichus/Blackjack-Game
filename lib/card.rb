@@ -29,14 +29,11 @@ class Card
   # Converts the rank to be clearly printed
   def rank_for_print
     rank_print = @rank
-    if @rank == :A
-      rank_print = "Ace"
-    elsif @rank == :K
-      rank_print = "King"
-    elsif @rank == :Q
-      rank_print = "Queen"
-    elsif @rank == :J
-      rank_print = "Jack"
+    case @rank
+    when :A then rank_print = "Ace"
+    when :K then rank_print = "King"
+    when :Q then rank_print = "Queen"
+    when :J then rank_print = "Jack"
     end
     rank_print
   end
