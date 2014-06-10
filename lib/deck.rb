@@ -2,11 +2,13 @@ require "card"
 
 #
 class Deck
+  attr_reader :decks
+
   def initialize(decks = 1)
     @suits = [:clubs, :diamonds, :hearts, :spades]
     @ranks = [:A, 2, 3, 4, 5, 6, 7, 8, 9, 10, :J, :Q, :K]
     @decks = decks
-    self.build_deck
+    build_deck
     # See contents of @deck -for testing- Remove before push
     # @deck.each { |i| puts "Index #{@deck.find_index(i)} holds #{i.rank}, #{i.suit}" }
   end
@@ -22,23 +24,16 @@ class Deck
 
   # draws a card off the top of the deck and returns it
   def draw
-    card = @deck.shift
-    card
+    @deck.shift
   end
 
   # returns the number of cards left in the deck
   def cards_left
-    left = @deck.length
-    left
+    @deck.length
   end
 
   # shuffles the contents of deck
   def shuffle
     @deck.shuffle! # Contents of @deck will be permanently changed
-  end
-
-  # returns the number of decks used to build the Deck object
-  def decks
-    @decks
   end
 end

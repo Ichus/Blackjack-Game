@@ -31,3 +31,11 @@ Tidy the blackjack_game.rb could also be tidied and expanded
 Test: now work. if the lines game =BlackjackGame.new and game.play are commented out
       some test specific methods were commented out before I ran the game
       a few tests fail until they're reinstated.
+
+
+Thoughs on Enumerables in Deck and Hand
+---------------------------------------
+  At first pass I don't see why I would want to mixin Enumerable to my Deck or
+Hand class. They both contain an array composed of objects. One feeding into the
+other. They already use .each and the like just fine. I don't see what I would be
+doing besides rewriting the already functioning behavior.

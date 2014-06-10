@@ -6,16 +6,13 @@ require "deck"
 # does it have to know what a card is?
 # Erase after finding out
 class Hand
+  attr_reader :hand
+
   def initialize(deck, limit = 5, double_down_limit = 3)
     @hand = []
     @deck = deck
     @limit = limit
     @DOUBLE_DOWN_LIMIT = double_down_limit
-  end
-
-  # access to the @hand array from outside the class. Not sure if best idea
-  def show_card
-    @hand
   end
 
   # prints the contents of the hand array
