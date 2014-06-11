@@ -6,6 +6,7 @@ require "round"
 # This class sets up the blackjack game and iterates through rounds
 # holding the player's progress, and determines when the game ends
 class BlackjackGame
+  # Only for testing
   attr_reader :player
 
   def initialize
@@ -49,5 +50,6 @@ class BlackjackGame
   end
 end
 
+# Start and run the game
 game = BlackjackGame.new
 game.play

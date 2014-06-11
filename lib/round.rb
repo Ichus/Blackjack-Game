@@ -4,6 +4,7 @@ require "deck"
 
 #
 class Round
+  # Only used for testing
   attr_reader :dealer, :player
 
   def initialize(deck, player, dealer)
@@ -149,7 +150,7 @@ class Round
 
   # Checks to see whether the player busted, and then it checks to whether the
   # player has better, equal or worse hand then the dealer. updates accordingly
-  # The check to see if dealer busts is done in new_round (This class is messy)
+  # The check to see if dealer busts is done in new_round
   def winning_hand
     if !(@player.hand.bust)
       if @player.hand.value > @dealer.hand.value
