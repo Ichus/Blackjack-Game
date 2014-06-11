@@ -1,4 +1,4 @@
-README BlackJack Command Line Game README
+README BlackJack Command Line Game 
 ------------------------------------------
 This game allows one player to play blackjack against the dealer
 You start with 100 credits and bet in 10 credit increments
