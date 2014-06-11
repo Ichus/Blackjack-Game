@@ -6,6 +6,8 @@ require "round"
 # This class sets up the blackjack game and iterates through rounds
 # holding the player's progress, and determines when the game ends
 class BlackjackGame
+  attr_reader :player
+
   def initialize
     @deck = Deck.new(3)
     @deck.shuffle
@@ -47,5 +49,5 @@ class BlackjackGame
   end
 end
 
-game = BlackjackGame.new
-game.play
+#game = BlackjackGame.new
+#game.play

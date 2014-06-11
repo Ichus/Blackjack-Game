@@ -4,6 +4,8 @@ require "deck"
 
 #
 class Round
+  attr_reader :dealer, :player
+
   def initialize(deck, player, dealer)
     @deck = deck
     @player = player
@@ -69,8 +71,8 @@ class Round
 
   # prints the dealer's and player's hand. somewhat redundant
   def show_hands
-    puts "Dealer's hand is"
-    @dealer.hand.print_hand
+    puts "Dealer Shows"
+    @dealer.hand.print_hand(1)
     puts "Your hand is"
     @player.hand.print_hand
   end

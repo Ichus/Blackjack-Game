@@ -15,8 +15,8 @@ class Hand
   end
 
   # prints the contents of the hand array
-  def print_hand
-    index = 0
+  def print_hand(count = 0)
+    index = count
     until index == @hand.rindex(@hand[-1])
       print "#{@hand[index].print_card}, "
       index += 1

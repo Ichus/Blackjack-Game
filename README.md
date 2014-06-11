@@ -2,10 +2,10 @@ README BlackJack Command Line Game
 ------------------------------------------
 This game allows one player to play blackjack against the dealer.
 You start with 100 credits and bet in 10 credit increments.
-follow the instructions on screen to play the game.
+Follow the instructions on screen to play the game.
 When asked for input you can type the word or first letter. Either works
 
-All required features implemented except tests for blackjack_game.rb and round.rb
+All required features implemented
 
 USE
 -------------------------------------------
@@ -26,8 +26,6 @@ Allow variable types of chips and blackjack payout of 3/2
 Known Issues
 -------------------------------------------
 Test: now work. if the lines game =BlackjackGame.new and game.play are commented out
-
-  tests for blackjack_game.rb and round.rb are still incomplete
 
 Questions
 -------------------------------------------

@@ -7,6 +7,7 @@ class Dealer < BasePlayer
     until @hand.value > 16
       update_deck if @deck.cards_left < 1
       @hand.hit
+      puts "Dealer hits"
     end
   end
 
