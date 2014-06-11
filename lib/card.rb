@@ -1,18 +1,10 @@
 # This class will store the value of a card
 class Card
+  attr_reader :rank, :suit
+
   def initialize(rank, suit)
     @rank = rank
     @suit = suit
-  end
-
-  # Returns the card's rank
-  def rank
-    @rank
-  end
-
-  # Returns the card's suit
-  def suit
-    @suit
   end
 
   # Returns the cards value
@@ -44,11 +36,11 @@ class Card
   end
 
   # Used by assert_equal to determine if the value of two cards match
-  # def ==(other)
-  #   if @rank == other.rank && @suit == other.suit
-  #     return true
-  #   else
-  #     return false
-  #   end
-  # end
+  def ==(other)
+    if @rank == other.rank && @suit == other.suit
+      return true
+    else
+      return false
+    end
+  end
 end

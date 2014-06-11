@@ -9,49 +9,47 @@ class Round
     @player = player
     @dealer = dealer
     @player_bet = 0
+    @MIN_BET = 0
+    @MAX_BET = 10
   end
 
   # called to start a new round and iterate through all the necessary steps
   def new_round
-    self.take_bets
-    self.set_hands
-    self.show_hands
-    if @player.chips_remaining >= @player_bet
-      self.hit_or_stay
+    take_bets
+    set_hands
+    show_hands
+    if @player.chip_pool >= @player_bet
+      hit_or_stay
     else
-      self.hit_or_stay_cont
+      hit_or_stay_cont
     end
     @dealer.hit_til_stay unless @player.hand.bust
-    self.show_dealer_hand
+    show_dealer_hand
     if !(@dealer.hand.bust)
-      self.winning_hand
+      winning_hand
     else
-      self.dealer_bust
+      dealer_bust
     end
   end
 
-  # records input for bet and sends to place_bet method
+  # Takes a user's input. Once validated places a bet with @player.bet
   def take_bets
-    puts "Please enter your bet in increments of 10. 100 is max bet"
-    puts "You have #{@player.chips_remaining} remaining"
-    @player_bet = gets.to_i
-    @player_bet /= 10 # 10 is the currently the only value of chip used. change if implementing ChipPool class
-    self.place_bet(@player_bet)
-  end
-
-  # checks whether bet input is valid and if so places the bet. Otherwise asks for input again
-  def place_bet(bet)
-    @player_bet = bet
-    if (@player.can_bet(@player_bet) && @player_bet > 0 && @player_bet <=10) #&& (@player_bet % 10) == 0)
-      @player.bet(@player_bet)
-    else
-      puts "Invalid bet."
-      puts "You must bet at least one chip, and you can't bet more than you have"
+    bet_is_valid = false
+    until bet_is_valid
       puts "Please enter your bet in increments of 10. 100 is max bet"
       puts "You have #{@player.chips_remaining} remaining"
       @player_bet = gets.to_i
-      @player_bet /= 10 # 10 is the currently the only value of chip used. change if implementing ChipPool class
-      self.place_bet(@player_bet)
+      if (@player_bet % 10) == 0 # Prevents bets that aren't in increments of 10 from being made
+        @player_bet /= 10 # 10 is the currently the only value of chip used. change if implementing ChipPool class
+        if @player.can_bet(@player_bet) && @player_bet > @MIN_BET && @player_bet <= @MAX_BET
+          @player.bet(@player_bet) # Places bet
+          bet_is_valid = true # Breaks from loop
+        else
+          puts "Invalid bet."
+        end
+      else
+        puts "Invalid bet"
+      end
     end
   end
 
@@ -62,6 +60,7 @@ class Round
     @player.new_hand
     @dealer.new_hand
 
+    @dealer.update_deck if @deck.cards_left < ((hand_size * 2) + 1) # Rebuilds deck if empty
     hand_size.times do
       @player.hand.hit
       @dealer.hand.hit
@@ -91,7 +90,6 @@ class Round
   # called when the player wins. updates their credits and prints a message
   # notifying them of the updated contents
   def player_win
-    puts "You won the hand"
     @player.won_bet
     puts "You have #{@player.chips_remaining} remaining"
   end
@@ -104,19 +102,21 @@ class Round
     puts "Would you like to hit, stay or doubledown"
     input = gets.chomp.to_s
     input.upcase!
+    @dealer.update_deck if @deck.cards_left < 1 # Rebuilds deck if empty
     if input == "HIT" || input == "H"
       @player.hand.hit
-      self.show_player_hand
-      self.hit_or_stay_cont
+      show_player_hand
+      return if @player.hand.bust # Escapes recursion if the player busts
+      hit_or_stay_cont
     elsif input == "STAY" || input == "S"
       puts "You stand"
     elsif input == "DOUBLEDOWN" || input == "D"
       @player.hand.hit
       @player.double_down
-      self.show_player_hand
+      show_player_hand
     else
       puts "Invalid input."
-      self.hit_or_stay
+      hit_or_stay
     end
   end
 
@@ -125,22 +125,24 @@ class Round
     puts "Would you like to hit or stay"
     input = gets.chomp.to_s
     input.upcase!
+    @dealer.update_deck if @deck.cards_left < 1 # rebuilds deck if empty
     if input == "HIT" || input == "H"
       @player.hand.hit
-      self.show_player_hand
-      self.hit_or_stay_cont
+      show_player_hand
+      return if @player.hand.bust # Escapes recursion if the player busts
+      hit_or_stay_cont
     elsif input == "STAY" || input == "S"
       puts "You stand"
     else
       puts "Invalid input. Enter hit or stay"
-      self.hit_or_stay_cont
+      hit_or_stay_cont
     end
   end
 
   # called when the dealer busts. prints a message and passes control to player_win
   def dealer_bust
     puts "The dealer busted. You win"
-    self.player_win
+    player_win
   end
 
   # Checks to see whether the player busted, and then it checks to whether the
@@ -149,10 +151,10 @@ class Round
   def winning_hand
     if !(@player.hand.bust)
       if @player.hand.value > @dealer.hand.value
-        self.player_win
+        player_win
       elsif @player.hand.value == @dealer.hand.value
         if @player.hand.blackjack? && !@dealer.hand.blackjack?
-          self.player_win
+          player_win
         else
           puts "The hand pushed"
           @player.push_bet

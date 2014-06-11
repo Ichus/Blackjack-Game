@@ -2,6 +2,8 @@ require "card"
 
 #
 class Deck
+  include Enumerable
+
   attr_reader :decks
 
   def initialize(decks = 1)
@@ -9,8 +11,6 @@ class Deck
     @ranks = [:A, 2, 3, 4, 5, 6, 7, 8, 9, 10, :J, :Q, :K]
     @decks = decks
     build_deck
-    # See contents of @deck -for testing- Remove before push
-    # @deck.each { |i| puts "Index #{@deck.find_index(i)} holds #{i.rank}, #{i.suit}" }
   end
 
   # Rebuilds a/the deck(s) in a standard order.
@@ -35,5 +35,11 @@ class Deck
   # shuffles the contents of deck
   def shuffle
     @deck.shuffle! # Contents of @deck will be permanently changed
+  end
+
+  def each
+    @deck.each do |card|
+      yield card
+    end
   end
 end

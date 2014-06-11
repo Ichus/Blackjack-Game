@@ -14,7 +14,7 @@ class PlayerTest < MiniTest::Unit::TestCase
   end
 
   def test_player_has_chip_pool
-    assert_equal @player.chips_remaining, 10
+    assert_equal @player.chip_pool, 10
   end
 
   def test_player_can_make_bet
@@ -22,7 +22,7 @@ class PlayerTest < MiniTest::Unit::TestCase
   end
 
   def test_player_can_win_bet
-    @player.won_bet(3)
+    @player.won_bet
     assert_equal @player.chips_remaining, 13
   end
 end

@@ -22,7 +22,7 @@ class BlackjackGame
     puts "Play until you run out or you decide to quit"
     while (@player.chips_remaining > 0) && (@flag == true)
       @round.new_round
-      self.keep_playing
+      keep_playing
     end
     if @flag == false
       puts "You quit. Thanks for playing"
@@ -30,10 +30,6 @@ class BlackjackGame
       puts "You ran out of chips. Better luck next time."
     end
   end
-
-  # def update_deck(deck)
-  #   @deck.build_deck.shuffle
-  # end
 
   # Queries the user for input on whether they'd like to keep playing
   def keep_playing
@@ -46,7 +42,7 @@ class BlackjackGame
       @flag = false
     else
       puts "Invalid input"
-      self.keep_playing
+      keep_playing
     end
   end
 end

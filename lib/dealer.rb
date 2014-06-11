@@ -4,6 +4,13 @@ require "base_player"
 class Dealer < BasePlayer
   # the dealer hits until his hand is above 16
   def hit_til_stay
-    @hand.hit until @hand.value > 16
+    until @hand.value > 16
+      update_deck if @deck.cards_left < 1
+      @hand.hit
+    end
+  end
+
+  def update_deck
+    @deck.build_deck.shuffle
   end
 end

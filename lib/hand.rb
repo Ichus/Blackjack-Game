@@ -1,11 +1,10 @@
 require "card"
 require "deck"
 
-# Not sure if i have to initialize a card object
-# @hand is just an array that holds cards
-# does it have to know what a card is?
-# Erase after finding out
+# This class stores an array of cards as the hand
 class Hand
+  include Enumerable
+
   attr_reader :hand
 
   def initialize(deck, limit = 5, double_down_limit = 3)
@@ -49,11 +48,9 @@ class Hand
     hand_value = total_value
     num_aces = ace_count
 
-    if hand_value > 21
-      until hand_value <= 21 || num_aces == 0
-        hand_value -= 10
-        num_aces -= 1
-      end
+    until hand_value <= 21 || num_aces == 0
+      hand_value -= 10
+      num_aces -= 1
     end
 
     hand_value
@@ -74,18 +71,23 @@ class Hand
   # end
 
   # returns whether the hand is a blackjack. Used for special blackjack payouts
-  # which aren't in yet
   def blackjack?
     @hand.length == 2 && value == 21
   end
 
   # For testing purposes only. Comment out
-  # def add_ace
-  #   @hand.push(Card.new(:A, :spades))
-  # end
+  def add_ace
+    @hand.push(Card.new(:A, :spades))
+  end
 
   # For testing purposes only. Comment out
-  # def add_jack
-  #   @hand.push(Card.new(:J, :spades))
-  # end
+  def add_jack
+    @hand.push(Card.new(:J, :spades))
+  end
+
+  def each
+    @hand.each do |card|
+      yield card
+    end
+  end
 end
